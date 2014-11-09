@@ -1,0 +1,22 @@
+class Solution {
+private: 
+    vector<vector<int>> ret;
+    vector<int> temp;
+    
+public:
+    vector<vector<int> > combine(int n, int k) {
+        temp.resize(k);     // 通过resize来给temp一个存储范围。
+        dfs(1,n,k);
+        return ret;
+    }
+    
+    void dfs(int i, int n, int k){  //i 表示数字开始的值
+        while(i<=n){
+            temp[temp.size()-k]=i++;
+            if(k>1)
+                dfs(i,n,k-1);
+            else
+                ret.push_back(temp);
+        }
+    }
+};
