@@ -1,0 +1,73 @@
+class Solution {
+public:
+//以下方法用了n个存储空间。用于存储哪些列需要置零。
+/*    void setZeroes(vector<vector<int> > &matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<bool> p = vector<bool>(n,false);
+        bool zeroRow = false;
+        for(int i=0; i<m; ++i){
+            zeroRow = false;
+            for(int j=0; j<n; ++j){
+                if(matrix[i][j]==0){
+                    p[j]=true;
+                    zeroRow = true;
+                }
+            }
+            if(zeroRow){
+                for(int j=0; j<n; ++j){
+                    matrix[i][j]=0;
+                }
+            }
+        }
+        for(int j=0; j<n; ++j){
+            if(p[j]){
+                for(int i=0; i<m; ++i){
+                    matrix[i][j]=0;
+                }
+            }
+        }
+        
+    }
+    */
+    // 改进方法，用需要置零的那一行来存储，这样可以节约存储空间。只用一个整数来存储那个行。存储空间1。
+    void setZeroes(vector<vector<int> > &matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int p = -1;     //p用于存储所使用的存储的行号，初始为-1表示没有行使用。
+        bool zeroRow = false;
+        
+        for(int i=0; i<m; ++i){
+            zeroRow = false;
+            for(int j=0; j<n; ++j){
+                if(matrix[i][j]==0){
+                    if(p==-1){      // 如果这是第一个出现0的行，则p存储此行号，并将要置零的列在此行存为0。
+                        p=i;
+                        matrix[p][j]=0;
+                    }
+                    else{
+                        matrix[p][j]=0;
+                    }
+                    zeroRow = true;
+                }
+            }
+            if(zeroRow&&p!=i){
+                for(int j=0; j<n; ++j){
+                    matrix[i][j]=0;
+                }
+            }
+        }
+        if(p!=-1){
+            for(int j=0; j<n; ++j){
+                if(matrix[p][j]==0){
+                    for(int i=0; i<m; ++i){
+                        matrix[i][j]=0;
+                    }
+                }
+            }
+            for(int j=0; j<n; ++j){
+                matrix[p][j]=0;
+            }
+        }
+    }
+};
