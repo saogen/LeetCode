@@ -1,0 +1,27 @@
+class MinStack {
+private:
+    deque<int> v;
+    deque<int> s;
+public:
+    void push(int x){
+        v.push_back(x);
+        if(s.empty()||x<=s.back()) 
+            s.push_back(x);
+    }
+    
+    void pop(){
+        if(s.back()==v.back()){
+            s.pop_back();
+            v.pop_back();
+        }
+        else v.pop_back();
+    }
+    
+    int top(){
+        return v.back();
+    }
+    
+    int getMin(){
+        return s.back();
+    }
+};
