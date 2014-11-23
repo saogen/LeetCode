@@ -1,0 +1,67 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder) {
+        stack<TreeNode *> s;
+        TreeNode *root;
+        TreeNode *temp;
+        if(inorder.size()==0) return NULL;
+        root = new TreeNode(postorder.back());
+        s.push(root);
+        postorder.pop_back();
+        
+        while(true){
+            if(s.top()->val==inorder.back()){
+                temp = s.top();
+                s.pop();
+                inorder.pop_back();
+                if(inorder.size()==0) break;
+                if(!s.empty()&&s.top()->val==inorder.back()) continue;
+                temp->left = new TreeNode(postorder.back());
+                s.push(temp->left);
+                postorder.pop_back();
+            }
+            else{
+                temp = new TreeNode(postorder.back());
+                s.top()->right = temp;
+                s.push(temp);
+                postorder.pop_back();
+            }
+        }
+        return root;
+        
+        /* Memory Limit Excced!
+        if(inorder.size()==0||postorder.size()==0) return NULL;
+        int len = inorder.size();
+        TreeNode *root;
+        vector<int> li, ri, lp, rp;     // li: left inorder, ri: right inorder, lp: left postorder, rp: right postorder
+        root = new TreeNode(postorder.back());
+        bool isLeft=true;
+        for(int i=0; i<len; ++i){
+            if(inorder[i]==postorder.back()){
+                isLeft=false;
+                continue;
+            }
+            if(isLeft){
+                li.push_back(inorder[i]);
+                lp.push_back(postorder[i]);
+            }
+            else {
+                ri.push_back(inorder[i]);
+                rp.push_back(postorder[i-1]);
+            }
+        }
+        root->right=buildTree(ri,rp);
+        root->left=buildTree(li,lp);
+        return root;
+        */
+    }
+};
