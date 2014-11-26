@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<vector<int> > subsetsWithDup(vector<int> &S) {
+        sort(S.begin(),S.end());
+        vector<vector<int>> ret;
+        vector<int> t;
+        ret.push_back(t);
+        int len=S.size();
+        int before=0;
+        
+        for(int i=0;i<len;++i){
+            vector<vector<int>> temp;
+            temp=ret;
+            for(int j=0;j<ret.size();++j){
+                if(i==0){
+                    ret[j].push_back(S[i]);
+                    temp.push_back(ret[j]);
+                }
+                else if(S[i]==S[i-1]){
+                    if(j>=before){
+                        ret[j].push_back(S[i]);
+                        temp.push_back(ret[j]);
+                    }
+                }
+                else if(S[i]!=S[i-1]){
+                    ret[j].push_back(S[i]);
+                    temp.push_back(ret[j]);
+                }
+            }
+            before=ret.size();
+            ret=temp;
+        }
+        return ret;
+    }
+};
