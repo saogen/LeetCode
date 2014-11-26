@@ -7,10 +7,8 @@ public:
         ret.push_back(t);
         int len=S.size();
         int before=0;
-        
+        vector<vector<int>> temp=ret;
         for(int i=0;i<len;++i){
-            vector<vector<int>> temp;
-            temp=ret;
             for(int j=0;j<ret.size();++j){
                 if(i==0){
                     ret[j].push_back(S[i]);
