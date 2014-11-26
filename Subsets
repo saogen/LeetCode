@@ -8,8 +8,8 @@ public:
         sort(S.begin(),S.end());
         for(int i=0;i<len;++i){
             vector<vector<int>> temp;
+            temp=ret;
             for(int j=0;j<ret.size();++j){
-                temp.push_back(ret[j]);
                 ret[j].push_back(S[i]);
                 temp.push_back(ret[j]);
             }
